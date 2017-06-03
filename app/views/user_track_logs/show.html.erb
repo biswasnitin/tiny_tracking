@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>User:</strong>
+  <%= @user_track_log.user_id %>
+</p>
+
+<p>
+  <strong>User name:</strong>
+  <%= @user_track_log.user_name %>
+</p>
+
+<%= link_to 'Edit', edit_user_track_log_path(@user_track_log) %> |
+<%= link_to 'Back', user_track_logs_path %>

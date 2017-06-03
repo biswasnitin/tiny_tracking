@@ -1,0 +1,27 @@
+<%= form_with(model: user_track_log, local: true) do |form| %>
+  <% if user_track_log.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(user_track_log.errors.count, "error") %> prohibited this user_track_log from being saved:</h2>
+
+      <ul>
+      <% user_track_log.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :user_id %>
+    <%= form.number_field :user_id, id: :user_track_log_user_id %>
+  </div>
+
+  <div class="field">
+    <%= form.label :user_name %>
+    <%= form.text_field :user_name, id: :user_track_log_user_name %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>
