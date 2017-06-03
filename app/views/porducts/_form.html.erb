@@ -1,0 +1,17 @@
+<%= form_with(model: porduct, local: true) do |form| %>
+  <% if porduct.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(porduct.errors.count, "error") %> prohibited this porduct from being saved:</h2>
+
+      <ul>
+      <% porduct.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>
