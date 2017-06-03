@@ -1,0 +1,41 @@
+<%#
+# To change this template, choose Tools | Templates
+# and open the template in the editor.
+%>
+  <%#= javascript_include_tag "form_validation" %>
+  
+<h1>Sign Up</h1>
+
+<%= form_for @user do |f| %>
+
+  <% if @user.errors.any? %>
+<h2>Invalid</h2>
+    <% for message in @user.errors.full_messages %>
+    <strong> <font color="red"> <li><%=  message %></li> </font></strong>
+
+    <%end%>
+  <%end%>
+      <p>
+      <%= f.label :email ,:class => 'mail'  %><br/>
+ 
+  <%= f.text_field :email, :class => 'validate' %>&nbsp; &nbsp;&nbsp;<span id ="user_email_message" class ="message" style="display:inline-block;"><strong><font color ="red"> *Requierd </font> </strong></span>
+      </p>
+
+            <p>
+    <%= f.label :name %><br/>
+
+  <%= f.text_field :name, :class => 'validate' %>&nbsp; &nbsp;&nbsp;<span id ="user_name_message" class ="message"><strong> <font color ="red">*Required </font></strong> </span>
+      </p>
+  
+  <p>
+    <%= f.label :password  %><br/>
+    <%= f.password_field :password %>
+
+  </p>
+  <p>
+    <%= f.label :password_confirmation  %><br/>
+    <%= f.password_field :password_confirmation %>
+  </p>
+
+  <%= f.submit "Sign up" ,:class =>'signup' %>
+<% end %>

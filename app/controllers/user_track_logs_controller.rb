@@ -25,10 +25,15 @@ class UserTrackLogsController < ApplicationController
   # POST /user_track_logs.json
   def create
     @user_track_log = UserTrackLog.new(user_track_log_params)
+    @user = User.find_by_name(params[:user_track_log][:user_name])
+    if @user.blank?
+      redirect_to root_url, notice: 'Invalid User Name.' 
+      return
+    end
 
     respond_to do |format|
       if @user_track_log.save
-        format.html { redirect_to @user_track_log, notice: 'User track log was successfully created.' }
+        format.html { redirect_to root_url, notice: 'User singed in successfully.' }
         format.json { render :show, status: :created, location: @user_track_log }
       else
         format.html { render :new }

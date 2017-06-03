@@ -1,0 +1,7 @@
+<li id="active"><a href="#">Home<span class="tab-l"></span><span class="tab-r"></span></a></li>
+                <li id=""><%= link_to 'Articles', articles_path,:class => "main_tab", remote: true %> <span class="tab-l"></span><span class="tab-r"></span></li> <!-- Active -->
+                <li id =""><%= link_to 'My Articles', articles_path(:my_article => "Myarticles"),:method => 'get',:class => "main_tab",remote: true %><span class="tab-l"></span><span class="tab-r"></span></li>
+                <li id =""><a href="#" class = "tab">Photos<span class="tab-l"></span><span class="tab-r"></span></a></li>
+                <li id =""><a href="#" class = "tab">Portfolio<span class="tab-l"></span><span class="tab-r"></span></a></li>
+                <li id =""><a href="#" class = "tab">Contact<span class="tab-l"></span><span class="tab-r"></span></a></li>
+                <li id =""><a href="#" class = "tab">Links<span class="tab-l"></span><span class="tab-r"></span></a></li>

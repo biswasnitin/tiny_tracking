@@ -1,5 +1,5 @@
 <h1>Welcome</h1>
-
+<p id="notice"><%= notice %></p>
 <%= form_with(model: @user_track_log, local: true) do |form| %>
   <% if @user_track_log.errors.any? %>
     <div id="error_explanation">
@@ -21,10 +21,8 @@
 
   </div>
 
-  <div class="actions">
-    <%= form.submit %>
-  </div>
+ 
 <% end %>
 
-<%= button_to "Create", new_user_url, :id => "open-contacts-dialog-btn",
+<%= button_to "Create User", new_user_url, :id => "open-contacts-dialog-btn",
       :class => "inbox-sf-add-btn tip", :method => :get %>
