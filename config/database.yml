@@ -14,9 +14,8 @@ development:
   database: tiny_traking
   host: localhost
   username: user
-  database: app-dev
   # username: root
-  # password: '0734'
+   password: '0734'
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
@@ -29,6 +28,5 @@ production:
   <<: *default
   database: tiny_traking
   username: user
-  database: app-dev
   # username: root
-  # password: '0734'
+   password: '0734'
