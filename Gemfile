@@ -10,9 +10,10 @@ end
 gem 'rails', '~> 5.1.0'
 # Use sqlite3 as the database for Active Record
 #gem 'sqlite3'
-gem 'mysql2'	
+#gem 'mysql2'	
 # Use Puma as the app server
 gem 'puma', '~> 3.7'
+gem 'pg'
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
 # Use Uglifier as compressor for JavaScript assets
