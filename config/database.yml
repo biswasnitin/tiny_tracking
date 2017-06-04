@@ -27,6 +27,7 @@ test:
 production:
   <<: *default
   database: tiny_traking
+  host: localhost
   username: user
   # username: root
-   password: '0734'
+  password: '0734'
