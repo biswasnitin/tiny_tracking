@@ -3,7 +3,9 @@ class User < ApplicationRecord
 
 	 attr_accessor :password
   validates_confirmation_of :password
-  #validates :email, uniqueness: true
+  validates :name, uniqueness: true
+  validates :name, presence: true
+  validates :name, format: { with: /\A[a-zA-Z0-9]+\Z/, message: "Special Character and White space are not allowed" }
   before_save :encript_password
   before_create {generate_token(:auth_token)}
 

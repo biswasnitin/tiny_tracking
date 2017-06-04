@@ -1,16 +1,38 @@
 class UserTrackLogsController < ApplicationController
-  before_action :set_user_track_log, only: [:show, :edit, :update, :destroy]
+  before_action :set_user_track_log, only: [:edit, :update, :destroy]
+
+   before_action :redirect_to_login,except:[:create]
 
   # GET /user_track_logs
   # GET /user_track_logs.json
   def index
-    @date = Date.parse(params[:day]) rescue Date.today
-    @user_track_logs = UserTrackLog.where('DATE(arrival_time) = ?', @date)
+    @date = Date.parse(params[:date]) rescue Date.today
+    @late_users_count = UserTrackLog.where('DATE(arrival_time) = ? and is_late = 1', @date).count
+    @avg_time = UserTrackLog.find_by_sql("select user_name,AVG(DATE_FORMAT(arrival_time,'%H:%i:%s')) 'av_time',user_id from user_track_logs where DATE(arrival_time) = '#{@date}'")
+
+    @user_track_logs = UserTrackLog.find_by_sql(" select u.id,u.user_name,arrival_time,is_late,u.user_id,t.late_count from user_track_logs u 
+                                                  left outer join (select user_name,sum(is_late) 'late_count',user_id
+                                                 from user_track_logs group by user_name,user_id) t  on (u.user_id =t.user_id)
+                                                   where DATE(u.arrival_time) = '#{@date}' order by u.user_name asc, t.late_count desc")
+
+
+
+
   end
 
   # GET /user_track_logs/1
   # GET /user_track_logs/1.json
   def show
+
+    @late_users_count = UserTrackLog.where(' is_late = 1 and user_id = ?',params[:id]).count
+    @avg_time = UserTrackLog.find_by_sql("select user_name,AVG(DATE_FORMAT(arrival_time,'%H:%i:%s')) 'av_time',user_id from user_track_logs  where user_id = '#{params[:id]}'")
+
+    @user_track_logs = UserTrackLog.find_by_sql(" select u.id,u.user_name,arrival_time,is_late,u.user_id from user_track_logs u 
+                                                  
+                                                   where u.user_id = '#{params[:id]}' order by arrival_time")
+
+
+
   end
 
   # GET /user_track_logs/new
@@ -25,12 +47,19 @@ class UserTrackLogsController < ApplicationController
   # POST /user_track_logs
   # POST /user_track_logs.json
   def create
-    @user_track_log = UserTrackLog.new(user_track_log_params)
+    
     @user = User.find_by_name(params[:user_track_log][:user_name])
     if @user.blank?
       redirect_to root_url, notice: 'Invalid User Name.' 
       return
     end
+    
+    user_logged_in = UserTrackLog.where('DATE(arrival_time) = ? and user_name = ?', Date.today,params[:user_track_log][:user_name])
+    unless user_logged_in.blank?
+      redirect_to root_url, notice: 'You have Already Signed in'
+       return
+    end
+    @user_track_log = UserTrackLog.new(user_track_log_params)
     @user_track_log.arrival_time = Time.now 
     @user_track_log.is_late = (Time.now > Time.now.beginning_of_day + 10.hours) ? 1 : 0
     @user_track_log.user_id  =  @user.id

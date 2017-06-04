@@ -1,14 +1,39 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <strong>User:</strong>
-  <%= @user_track_log.user_id %>
-</p>
+<h1>User Sing In Details</h1>
 
-<p>
-  <strong>User name:</strong>
-  <%= @user_track_log.user_name %>
-</p>
 
-<%= link_to 'Edit', edit_user_track_log_path(@user_track_log) %> |
-<%= link_to 'Back', user_track_logs_path %>
+<h3>User Name: <%= @user_track_logs[0].user_name%>  &nbsp; &nbsp; Avrage Sing in Time: <%= (Time.now.beginning_of_day + @avg_time[0].av_time.hours).strftime("%I:%M%p") %></h3>
+
+<h4> Late SingIn: <%=@late_users_count%></h4>
+
+<table>
+  <thead>
+    <tr>
+      
+    
+      <th>Date</th>
+      <th>Arrival Time</th>
+      <th colspan="3">Action</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @user_track_logs.each do |user_track_log| %>
+      <tr>
+       
+   
+        <td><%= user_track_log.arrival_time.strftime("%Y-%m-%d") %></td>
+        <%classcolor = (user_track_log.is_late == 1) ? 'redfont' : ''%>
+        <td><div class="<%=classcolor%>"><%= user_track_log.arrival_time.strftime("%I:%M%p") %></div></td>
+        
+        <td><%= link_to 'Destroy', user_track_log, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+
+

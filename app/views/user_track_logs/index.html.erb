@@ -2,6 +2,9 @@
 
 <h1>User Track Logs</h1>
 
+<br> 
+<h3> Late User: <%=@late_users_count%> &nbsp; &nbsp; Avrage Sing in Time: <%= (Time.now.beginning_of_day + @avg_time[0].av_time.hours).strftime("%I:%M%p") if @avg_time[0].av_time %>
+<br></br>
 <table>
   <thead>
     <tr>
@@ -17,7 +20,7 @@
     <% @user_track_logs.each do |user_track_log| %>
       <tr>
        
-        <td><%= user_track_log.user_name %></td>
+        <td><%= link_to "#{user_track_log.user_name}", "/user_track_logs/#{user_track_log.user_id}" %></td>
         <td><%= user_track_log.arrival_time.strftime("%Y-%m-%d") %></td>
         <%classcolor = (user_track_log.is_late == 1) ? 'redfont' : ''%>
         <td><div class="<%=classcolor%>"><%= user_track_log.arrival_time.strftime("%I:%M%p") %></div></td>
@@ -30,7 +33,7 @@
 
 <br>
 
-<%= link_to 'Previous', user_track_logs_path(:date => @date.prev_day) %>
-<%= link_to 'Next day', user_track_logs_path(:date => @date.next_day)  if @date.past? %>
+<%= link_to 'Previous day', user_track_logs_path(:date => @date.prev_day) if @date  %>
+<%= link_to 'Next day', user_track_logs_path(:date => @date.next_day)  if @date and @date.past? %>
 
 
