@@ -4,7 +4,8 @@ class UserTrackLogsController < ApplicationController
   # GET /user_track_logs
   # GET /user_track_logs.json
   def index
-    @user_track_logs = UserTrackLog.all
+    @date = Date.parse(params[:day]) rescue Date.today
+    @user_track_logs = UserTrackLog.where('DATE(arrival_time) = ?', @date)
   end
 
   # GET /user_track_logs/1
@@ -30,6 +31,9 @@ class UserTrackLogsController < ApplicationController
       redirect_to root_url, notice: 'Invalid User Name.' 
       return
     end
+    @user_track_log.arrival_time = Time.now 
+    @user_track_log.is_late = (Time.now > Time.now.beginning_of_day + 10.hours) ? 1 : 0
+    @user_track_log.user_id  =  @user.id
 
     respond_to do |format|
       if @user_track_log.save

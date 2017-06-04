@@ -3,7 +3,7 @@ class User < ApplicationRecord
 
 	 attr_accessor :password
   validates_confirmation_of :password
-  validates :email, uniqueness: true
+  #validates :email, uniqueness: true
   before_save :encript_password
   before_create {generate_token(:auth_token)}
 
