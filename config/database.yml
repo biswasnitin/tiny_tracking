@@ -12,6 +12,9 @@ default: &default
 development:
   <<: *default
   database: tiny_traking
+  host: localhost
+  username: user
+  database: app-dev
   # username: root
   # password: '0734'
 
@@ -25,5 +28,7 @@ test:
 production:
   <<: *default
   database: tiny_traking
+  username: user
+  database: app-dev
   # username: root
   # password: '0734'
