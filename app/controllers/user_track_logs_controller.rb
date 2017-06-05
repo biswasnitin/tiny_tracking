@@ -41,11 +41,11 @@ class UserTrackLogsController < ApplicationController
                                                    where u.user_id = '#{params[:id]}' order by arrival_time desc")
  
     deliver_at =  @user_track_logs.map{|d| d.arrival_time.hour * 3600 + d.arrival_time.min * 60 + d.arrival_time.sec}
-    avg =deliver_at.inject(:+) / deliver_at.count
-    avg_hour = avg / 3600
-    avg_minut = (avg % 3600) / 60
-    avg_sec = avg % 60
-    @avg_time = "#{avg_hour}:#{avg_minut}:#{avg_sec}"
+    avg =deliver_at.inject(:+) / deliver_at.count unless deliver_at.blank?
+    avg_hour = avg / 3600 if avg
+    avg_minut = (avg % 3600) / 60 if avg
+    avg_sec = avg % 60 if avg
+    @avg_time = "#{avg_hour}:#{avg_minut}:#{avg_sec}" if avg
 
   end
 
