@@ -9,7 +9,12 @@
   </head>
 
   <body>
+    <%if @current_user%>
+    
+    Logged in as: <%=@current_user.email %> <%= link_to 'Logout', logout_path %> &nbsp; &nbsp; <%= link_to 'User List', users_path %>
+    <%end%>
     <%= yield %>
+
   </body>
 </html>
 

@@ -1,9 +1,9 @@
 <p id="notice"><%= notice %></p>
 
-<h1>User Track Logs</h1>
+<h1>Daily Singin Details</h1>
 
 <br> 
-<h3> Late User: <%=@late_users_count%> &nbsp; &nbsp; Avrage Sing in Time: <%= (Time.now.beginning_of_day + @avg_time[0].av_time.hours).strftime("%I:%M%p") if @avg_time[0].av_time %>
+<h3> Late User: <%=@late_users_count%> &nbsp; &nbsp; Average Sing in Time: <%= @avg_time if @avg_time %>
 <br></br>
 <table>
   <thead>

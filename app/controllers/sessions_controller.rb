@@ -9,9 +9,6 @@ class SessionsController < ApplicationController
       cookies[:auth_token] = user.auth_token
       redirect_to user_track_logs_path,:notice => "Logged in!"
     else
-     puts  ":inside the else"
-
-
 
       flash[:error] = "Invalid email or password"
       render 'new'

@@ -83,6 +83,7 @@ GEM
     mini_portile2 (2.1.0)
     minitest (5.10.2)
     multi_json (1.12.1)
+    mysql2 (0.4.6-x64-mingw32)
     nio4r (2.1.0)
     nokogiri (1.7.2-x64-mingw32)
       mini_portile2 (~> 2.1.0)
@@ -178,6 +179,7 @@ DEPENDENCIES
   capybara (~> 2.13.0)
   coffee-rails (~> 4.2)
   jbuilder (~> 2.5)
+  mysql2
   pg
   pry
   puma (~> 3.7)

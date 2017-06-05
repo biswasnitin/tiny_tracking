@@ -8,13 +8,22 @@ class UserTrackLogsController < ApplicationController
   def index
     @date = Date.parse(params[:date]) rescue Date.today
     @late_users_count = UserTrackLog.where('DATE(arrival_time) = ? and is_late = 1', @date).count
-    @avg_time = UserTrackLog.find_by_sql("select user_name,AVG(DATE_FORMAT(arrival_time,'%H:%i:%s')) 'av_time',user_id from user_track_logs where DATE(arrival_time) = '#{@date}'")
+   # @avg_time = UserTrackLog.find_by_sql("select user_name,AVG(DATE_FORMAT(arrival_time,'%H:%i:%s')) 'av_time',user_id from user_track_logs where DATE(arrival_time) = '#{@date}'")
 
     @user_track_logs = UserTrackLog.find_by_sql(" select u.id,u.user_name,arrival_time,is_late,u.user_id,t.late_count from user_track_logs u 
                                                   left outer join (select user_name,sum(is_late) 'late_count',user_id
                                                  from user_track_logs group by user_name,user_id) t  on (u.user_id =t.user_id)
                                                    where DATE(u.arrival_time) = '#{@date}' order by u.user_name asc, t.late_count desc")
 
+
+
+    deliver_at =  @user_track_logs.map{|d| d.arrival_time.hour * 3600 + d.arrival_time.min * 60 + d.arrival_time.sec}
+    avg =deliver_at.inject(:+) / deliver_at.count unless deliver_at.blank?
+    avg_hour = avg / 3600 if avg
+    avg_minut = (avg % 3600) / 60 if avg
+    avg_sec = avg % 60 if avg
+
+    @avg_time = "#{avg_hour}:#{avg_minut}:#{avg_sec}" if avg
 
 
 
@@ -29,9 +38,14 @@ class UserTrackLogsController < ApplicationController
 
     @user_track_logs = UserTrackLog.find_by_sql(" select u.id,u.user_name,arrival_time,is_late,u.user_id from user_track_logs u 
                                                   
-                                                   where u.user_id = '#{params[:id]}' order by arrival_time")
-
-
+                                                   where u.user_id = '#{params[:id]}' order by arrival_time desc")
+ 
+    deliver_at =  @user_track_logs.map{|d| d.arrival_time.hour * 3600 + d.arrival_time.min * 60 + d.arrival_time.sec}
+    avg =deliver_at.inject(:+) / deliver_at.count
+    avg_hour = avg / 3600
+    avg_minut = (avg % 3600) / 60
+    avg_sec = avg % 60
+    @avg_time = "#{avg_hour}:#{avg_minut}:#{avg_sec}"
 
   end
 
@@ -64,9 +78,15 @@ class UserTrackLogsController < ApplicationController
     @user_track_log.is_late = (Time.now > Time.now.beginning_of_day + 10.hours) ? 1 : 0
     @user_track_log.user_id  =  @user.id
 
+
+     if (@user_track_log.is_late == 1)
+      message = "Hello #{params[:user_track_log][:user_name]} you are late today please sing in before 10 AM"
+    else
+      message = "Hello #{params[:user_track_log][:user_name]} you have singned in successfully"
+     end
     respond_to do |format|
       if @user_track_log.save
-        format.html { redirect_to root_url, notice: 'User singed in successfully.' }
+        format.html { redirect_to root_url, notice: "#{message}" }
         format.json { render :show, status: :created, location: @user_track_log }
       else
         format.html { render :new }

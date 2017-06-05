@@ -3,7 +3,7 @@
 <h1>User Sing In Details</h1>
 
 
-<h3>User Name: <%= @user_track_logs[0].user_name%>  &nbsp; &nbsp; Avrage Sing in Time: <%= (Time.now.beginning_of_day + @avg_time[0].av_time.hours).strftime("%I:%M%p") %></h3>
+<h3>User Name: <%= @user_track_logs[0].user_name%>  &nbsp; &nbsp; Average Sing in Time: <%= @avg_time %></h3>
 
 <h4> Late SingIn: <%=@late_users_count%></h4>
 

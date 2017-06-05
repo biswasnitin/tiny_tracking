@@ -5,7 +5,8 @@
 #   gem 'sqlite3'
 #
 default: &default
-  adapter: postgresql
+  # adapter: postgresql
+  adapter: mysql2
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
   timeout: 5000
 
@@ -14,8 +15,8 @@ development:
   database: tiny_traking
   #host: localhost
   # username: user
-  # # username: root
-  #  password: '0734'
+  username: root
+  password: '0734'
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
@@ -29,5 +30,5 @@ production:
   database: tiny_traking
  # host: localhost
   # username: user
-  # # username: root
-  # password: '0734'
+  username: root
+  password: '0734'
