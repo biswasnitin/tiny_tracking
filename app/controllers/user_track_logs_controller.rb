@@ -11,7 +11,7 @@ class UserTrackLogsController < ApplicationController
    # @avg_time = UserTrackLog.find_by_sql("select user_name,AVG(DATE_FORMAT(arrival_time,'%H:%i:%s')) 'av_time',user_id from user_track_logs where DATE(arrival_time) = '#{@date}'")
 
     @user_track_logs = UserTrackLog.find_by_sql(" select u.id,u.user_name,arrival_time,is_late,u.user_id,t.late_count from user_track_logs u 
-                                                  left outer join (select user_name,sum(is_late :: int) 'late_count',user_id
+                                                  left outer join (select user_name,SUM(is_late :: int) 'late_count',user_id
                                                  from user_track_logs group by user_name,user_id) t  on (u.user_id =t.user_id)
                                                    where DATE(u.arrival_time) = '#{@date}' order by u.user_name asc, t.late_count desc")
 
