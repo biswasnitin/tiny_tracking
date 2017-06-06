@@ -34,7 +34,7 @@ class UserTrackLogsController < ApplicationController
   def show
 
     @late_users_count = UserTrackLog.where(' is_late = 1 and user_id = ?',params[:id]).count
-    @avg_time = UserTrackLog.find_by_sql("select user_name,AVG(DATE_FORMAT(arrival_time,'%H:%i:%s')) 'av_time',user_id from user_track_logs  where user_id = '#{params[:id]}'")
+    #@avg_time = UserTrackLog.find_by_sql("select user_name,AVG(DATE_FORMAT(arrival_time,'%H:%i:%s')) 'av_time',user_id from user_track_logs  where user_id = '#{params[:id]}'")
 
     @user_track_logs = UserTrackLog.find_by_sql(" select u.id,u.user_name,arrival_time,is_late,u.user_id from user_track_logs u 
                                                   
