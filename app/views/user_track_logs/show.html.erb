@@ -5,7 +5,7 @@
 
 <h3>User Name: <%= @user_track_logs[0].user_name%>  &nbsp; &nbsp; Average Sing in Time: <%= @avg_time %></h3>
 
-<h4> Late SingIn: <%=@late_users_count%></h4>
+<h4> Late SingIn: <%=@user_track_logs.select{|utr| utr.is_late == 1}.count%></h4>
 
 <table>
   <thead>

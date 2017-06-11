@@ -7,7 +7,7 @@ class UserTrackLogsController < ApplicationController
   # GET /user_track_logs.json
   def index
     @date = Date.parse(params[:date]) rescue Date.today
-    @late_users_count = UserTrackLog.where('DATE(arrival_time) = ? and is_late = 1', @date).count
+   # @late_users_count = UserTrackLog.where('DATE(arrival_time) = ? and is_late = 1', @date).count
    # @avg_time = UserTrackLog.find_by_sql("select user_name,AVG(DATE_FORMAT(arrival_time,'%H:%i:%s')) 'av_time',user_id from user_track_logs where DATE(arrival_time) = '#{@date}'")
 
     @user_track_logs = UserTrackLog.find_by_sql(" select u.id,u.user_name,arrival_time,is_late,u.user_id,t.late_count from user_track_logs u 
@@ -33,7 +33,7 @@ class UserTrackLogsController < ApplicationController
   # GET /user_track_logs/1.json
   def show
 
-    @late_users_count = UserTrackLog.where(' is_late = 1 and user_id = ?',params[:id]).count
+    #@late_users_count = UserTrackLog.where(' is_late = 1 and user_id = ?',params[:id]).count
     #@avg_time = UserTrackLog.find_by_sql("select user_name,AVG(DATE_FORMAT(arrival_time,'%H:%i:%s')) 'av_time',user_id from user_track_logs  where user_id = '#{params[:id]}'")
 
     @user_track_logs = UserTrackLog.find_by_sql(" select u.id,u.user_name,arrival_time,is_late,u.user_id from user_track_logs u 

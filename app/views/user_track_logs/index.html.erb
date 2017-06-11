@@ -3,7 +3,7 @@
 <h1>Daily Singin Details</h1>
 
 <br> 
-<h3> Late User: <%=@late_users_count%> &nbsp; &nbsp; Average Sing in Time: <%= @avg_time if @avg_time %>
+<h3> Late User: <%=@user_track_logs.select{|utr| utr.is_late == 1}.count%> &nbsp; &nbsp; Average Sing in Time: <%= @avg_time if @avg_time %>
 <br></br>
 <table>
   <thead>
